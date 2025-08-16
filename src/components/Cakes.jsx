@@ -33,7 +33,7 @@ const Cakes = () => {
   ];
 
   const cakeTypes = [
-    { title: 'Chocolate Cake', link: '/cakes/chocolate', image: '/cakes/chocolate.jpg', type: 'full' },
+    { title: 'Red Violet Cake', link: '/cakes/red-violet', image: '/cakes/51ae0741-36d0-4b2f-b8d5-b28114f36e20.jpeg', type: 'full' },
     { title: 'Vanilla Cake', link: '/cakes/vanilla', image: '/cakes/vanilla.jpg', type: 'full' },
     { title: 'Strawberry Cake', link: '/cakes/strawberry', image: '/cakes/strawberry.jpg', type: 'slice' },
     { title: 'Cheesecake', link: '/cakes/cheesecake', image: '/cakes/cheesecake.jpg', type: 'slice' },
