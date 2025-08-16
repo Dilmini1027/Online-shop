@@ -1,4 +1,4 @@
-// src/pages/CakeTypes.jsx
+
 import React, { useState } from 'react';
 import {
   AppBar,
@@ -17,7 +17,7 @@ import {
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Cakes = () => {
+const Clothes = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,7 +26,7 @@ const Cakes = () => {
   // Categories with subitems
   const allCategories = [
     { title: 'Cakes', link: '/cakes', color: '#ffcc80', subItems: ['All', 'Violet', 'Chocolate', 'Butter', 'Strawberry', 'Red Velvet', 'Lemon', 'Black Forest', 'Cheese','Cup','Bento', 'Jar', 'Muffin'] },
-    { title: 'Clothes', link: '/clothes', color: '#90caf9', subItems: ['Frocks', 'Trousers', 'Lehenga', 'Sarees', 'Hot Shorts', 'Blouse', 'Salvar'] },
+    { title: 'Clothes', link: '/clothes', color: '#90caf9', subItems: ['All','Frocks', 'Trousers', 'Lehenga', 'Sarees', 'Hot Shorts', 'Blouse', 'Salvar'] },
     { title: 'Fruits', link: '/fruits', color: '#a5d6a7', subItems: [] },
     { title: 'Flowers', link: '/flowers', color: '#f48fb1', subItems: [] },
     { title: 'Vegetables', link: '/vegetables', color: '#81c784', subItems: [] },
@@ -34,46 +34,32 @@ const Cakes = () => {
   ];
 
   // Cake variants with separate images and prices
-  const cakeTypes = [
+  const clotheTypes = [
     
-    { title: 'Violet Cake', link: '/cakes/red-violet-1', image: '/cakes/5acad53a-0466-4b38-9789-a9ebaa768e80.jpeg', type: 'violet', price: '2kg - Rs 3500.00' },
-     { title: 'Red Velvet', link: '/cakes/red-velvet-1', image: '/cakes/59580f96-9f96-451b-893a-e067d0acee62.jpeg', type: 'red velvet', price: '2kg - Rs 3000.00' },
-    { title: 'Lemon Cake', link: '/cakes/lemon-2', image: '/cakes/f3923894-34f8-4426-8672-1c5a6ce2e164.jpeg', type: 'lemon', price: '2kg - Rs 3500.00' },
-    { title: 'Black Forest', link: '/cakes/black-forest-1', image: '/cakes/This gluten-free Black Forest Cake is a healthier….jpeg', type: 'black forest', price: '1.5kg - Rs 3000.00' },
-    { title: 'Cheese Cake', link: '/cakes/cheese-2', image: '/cakes/This carrot cake recipe is easy to make and….jpeg', type: 'cheese', price: '0.5kg - Rs 1200.00' },
-     { title: 'Cup Cake', link: '/cup/cup-1', image: '/cup/Christmas Tree Cupcakes, a simple Christmas….jpeg', type: 'cup', price: '5 pcs - Rs 1500.00' },
-    { title: 'Cup Cake', link: '/cup/cup-2', image: '/cup/dc7f46bc-0388-4174-bb79-1b92ac186ffa.jpeg', type: 'cup', price: '5 pcs - Rs 2000.00' },
-    { title: 'Bento Cake', link: '/bento/bento-1', image: '/bento/08156a6f-9936-49c3-b79e-6acce14a5d97.jpeg', type: 'bento', price: '0.8kg - Rs 2000.00' },
-   { title: 'Jar Cake', link: '/jar/jar-1', image: '/jar/Chocolate cake jar.jpeg', type: 'jar', price: '0.8kg - Rs 2500.00' },
-    
-    { title: 'Strawberry Cake', link: '/cakes/strawberry-2', image: '/cakes/cc013cca-d41b-4979-9349-9ed9bdaa0f83.jpeg', type: 'strawberry', price: '1kg - Rs 2000.00' },
-    { title: 'Butter Cake', link: '/cakes/butter-2', image: '/cakes/Resep Thai Butter Cake dari @liuin85.jpeg', type: 'butter', price: '1kg - Rs 1500.00' },
-    { title: 'Violet Cake', link: '/cakes/red-violet-2', image: '/cakes/https___youtu_be_gDfls8w_SLI.jpeg', type: 'violet', price: '2.5kg - Rs 3500.00' },
-    { title: 'Muffin', link: '/muffin/muffin-2', image: '/muffin/a86cfd8b-dee4-4ba1-af4e-b0c038cc3163.jpeg', type: 'muffin', price: '10 pcs - Rs 1000.00' },
-    { title: 'Chocolate Cake', link: '/cakes/chocolate-3', image: '/cakes/Triple Chocolate Ombre Cake.jpeg', type: 'chocolate', price: '0.8kg - Rs 1800.00' },
-    { title: 'Jar Cake', link: '/jar/jar-2', image: '/jar/Indulge in our delicious gourmet cake jars, made….jpeg', type: 'jar', price: '2kg - Rs 2500.00' },
-    { title: 'Lemon Cake', link: '/cakes/lemon-1', image: '/cakes/Refresh your senses with our Blueberry Lemon Cake….jpeg', type: 'lemon', price: '2kg - Rs 3500.00' },
-     { title: 'Strawberry Cake', link: '/cakes/strawberry-3', image: '/cakes/Indulge in this light and airy Strawberry and….jpeg', type: 'strawberry', price: '1.5kg - Rs 2700.00' },
-    { title: 'Lemon Cake', link: '/cakes/lemon-3', image: '/cakes/ce54ce41-8eb5-4bb3-bd56-db5162944575.jpeg', type: 'lemon', price: '1kg - Rs 2000.00' },
-     { title: 'Red Velvet', link: '/cakes/red-velvet-2', image: '/cakes/c3c4cbba-2fcb-47a1-a463-48facb4d9323.jpeg', type: 'red velvet', price: '1.5kg - Rs 3000.00' },
-    { title: 'Black Forest', link: '/cakes/black-forest-2', image: '/cakes/Easy Step by Step Guide to Make Black forest Cake.jpeg', type: 'black forest', price: '1kg - Rs 2000.00' },
-   { title: 'Red Velvet', link: '/cakes/red-velvet-3', image: '/cakes/Red Velvet Cake __A classic red velvet cake with creamy cream cheese frosting, served in slices on a white plate_ __Ingredients_ _For the Cake_ _- 2 1_2 cups all-purpose flour _- 1 1_2 cups granulated sugar _- 1.jpeg', type: 'red velvet', price: '1kg - Rs 2000.00' },
-    { title: 'Cheese Cake', link: '/cakes/cheese-1', image: '/cheese/🍰 Red Velvet White Chocolate Cheesecake_ A….jpeg', type: 'cheese', price: '1kg - Rs 2500.00' },
-    { title: 'Cheese Cake', link: '/cakes/cheese-3', image: '/cheese/Black Forest Cheesecake _ RICARDO.jpeg', type: 'cheese', price: '0.8kg - Rs 1500.00' },
-    { title: 'Black Forest', link: '/cakes/black-forest-3', image: '/cakes/Choose Top Best 9 Black Forest Cake and….jpeg', type: 'black forest', price: '2kg - Rs 3000.00' },
-    { title: 'Cup Cake', link: '/cup/cup-3', image: '/cup/20b96e25-488c-47fe-8fe7-83c47933ebea.jpeg', type: 'cup', price: '5 pcs - Rs 1800.00' },
-    { title: 'Bento Cake', link: '/bento/bento-2', image: '/bento/super cute 🧁 _ craveinn, kannapuram, kannur….jpeg', type: 'bento', price: '0.5kg - Rs 1000.00' },
-    { title: 'Bento Cake', link: '/bento/bento-3', image: '/bento/be5cecef-0a0e-4c97-90c2-49c8b6bf8297.jpeg', type: 'bento', price: '0.8kg - Rs 2000.00' },
-    { title: 'Jar Cake', link: '/jar/jar-3', image: '/jar/Mason Jar Cake Favors.jpeg', type: 'jar', price: '0.7kg - Rs 1800.00' },
-    { title: 'Muffin', link: '/muffin/muffin-1', image: '/muffin/Super easy and delicious almond muffins recipe….jpeg', type: 'muffin', price: '1kg - Rs 1800.00' },
-    { title: 'Muffin', link: '/muffin/muffin-3', image: '/muffin/476c958c-8f04-4e37-99ac-f540027d3c3a.jpeg', type: 'muffin', price: '2.5kg - Rs 3800.00' },
-    { title: 'Chocolate Cake', link: '/cakes/chocolate-2', image: '/cakes/Chococlate Fudge Cake.jpeg', type: 'chocolate', price: '3kg - Rs 4000.00' },
-    { title: 'Butter Cake', link: '/cakes/butter-1', image: '/cakes/(1) New Message!.jpeg', type: 'butter', price: '1kg - Rs 2000.00' },
-    { title: 'Violet Cake', link: '/cakes/red-violet-3', image: '/cakes/Embark on a culinary journey with this stunning….jpeg', type: 'violet', price: '0.8kg - Rs 1500.00' },
-    { title: 'Strawberry Cake', link: '/cakes/strawberry-1', image: '/cakes/This looks so pretty yet relatively simple_.jpeg', type: 'strawberry', price: '3kg - Rs 4000.00' }, 
-    { title: 'Chocolate Cake', link: '/cakes/chocolate-1', image: '/cakes/bad036d9-4e9a-4173-b002-f399031ae528.jpeg', type: 'chocolate', price: '1kg - Rs 2000.00' }, 
-    { title: 'Butter Cake', link: '/cakes/butter-3', image: '/cakes/630078a7-3409-4a72-bed2-5e5c4c9e5d61.jpeg', type: 'butter', price: '0.8kg - Rs 1800.00' },
+    { title: 'Frocks', link: 'clothes/frock', image: '/frocks/6e3a9e75-3c2e-44df-859c-7a0589dd2064.jpeg', type: 'frocks', price: '2kg - Rs 3500.00' },
+     { title: 'Trousers', link: '/cakes/red-velvet-1', image: '/frocks/6e8614d9-5488-4487-9ff6-6845512d0f29.jpeg', type: 'trousers', price: '2kg - Rs 3000.00' },
+    { title: 'Lehenga', link: '/cakes/lemon-2', image: '/cakes/f3923894-34f8-4426-8672-1c5a6ce2e164.jpeg', type: 'lehenga', price: '2kg - Rs 3500.00' },
+    { title: 'Sarees', link: '/cakes/black-forest-1', image: '/cakes/This gluten-free Black Forest Cake is a healthier….jpeg', type: 'sarees', price: '1.5kg - Rs 3000.00' },
+    { title: 'Hot Shorts', link: '/cakes/cheese-2', image: '/cakes/This carrot cake recipe is easy to make and….jpeg', type: 'hot shorts', price: '0.5kg - Rs 1200.00' },
+     { title: 'Blouse', link: '/cup/cup-1', image: '/cup/Christmas Tree Cupcakes, a simple Christmas….jpeg', type: 'blouse', price: '5 pcs - Rs 1500.00' },
+    { title: 'Salvar', link: '/cup/cup-2', image: '/cup/dc7f46bc-0388-4174-bb79-1b92ac186ffa.jpeg', type: 'salvar', price: '5 pcs - Rs 2000.00' },
 
+    { title: 'Violet Cake', link: '/clothes/frocks', image: '/frocks/6e8614d9-5488-4487-9ff6-6845512d0f29.jpeg', type: 'frocks', price: '2kg - Rs 3500.00' },
+     { title: 'Red Velvet', link: '/cakes/red-velvet-1', image: '/cakes/59580f96-9f96-451b-893a-e067d0acee62.jpeg', type: 'trousers', price: '2kg - Rs 3000.00' },
+    { title: 'Lemon Cake', link: '/cakes/lemon-2', image: '/cakes/f3923894-34f8-4426-8672-1c5a6ce2e164.jpeg', type: 'lehenga', price: '2kg - Rs 3500.00' },
+    { title: 'Black Forest', link: '/cakes/black-forest-1', image: '/cakes/This gluten-free Black Forest Cake is a healthier….jpeg', type: 'sarees', price: '1.5kg - Rs 3000.00' },
+    { title: 'Cheese Cake', link: '/cakes/cheese-2', image: '/cakes/This carrot cake recipe is easy to make and….jpeg', type: 'hot shorts', price: '0.5kg - Rs 1200.00' },
+     { title: 'Cup Cake', link: '/cup/cup-1', image: '/cup/Christmas Tree Cupcakes, a simple Christmas….jpeg', type: 'blouse', price: '5 pcs - Rs 1500.00' },
+    { title: 'Cup Cake', link: '/cup/cup-2', image: '/cup/dc7f46bc-0388-4174-bb79-1b92ac186ffa.jpeg', type: 'salvar', price: '5 pcs - Rs 2000.00' },
+    
+    { title: 'Violet Cake', link: 'clothes/frocks', image: '/frocks/Holiday Plaid Square Neckline Cinching Wais Ruffle….jpeg', type: 'frocks', price: '2kg - Rs 3500.00' },
+     { title: 'Red Velvet', link: '/cakes/red-velvet-1', image: '/cakes/59580f96-9f96-451b-893a-e067d0acee62.jpeg', type: 'trousers', price: '2kg - Rs 3000.00' },
+    { title: 'Lemon Cake', link: '/cakes/lemon-2', image: '/cakes/f3923894-34f8-4426-8672-1c5a6ce2e164.jpeg', type: 'lehenga', price: '2kg - Rs 3500.00' },
+    { title: 'Black Forest', link: '/cakes/black-forest-1', image: '/cakes/This gluten-free Black Forest Cake is a healthier….jpeg', type: 'sarees', price: '1.5kg - Rs 3000.00' },
+    { title: 'Cheese Cake', link: '/cakes/cheese-2', image: '/cakes/This carrot cake recipe is easy to make and….jpeg', type: 'hot shorts', price: '0.5kg - Rs 1200.00' },
+     { title: 'Cup Cake', link: '/cup/cup-1', image: '/cup/Christmas Tree Cupcakes, a simple Christmas….jpeg', type: 'blouse', price: '5 pcs - Rs 1500.00' },
+    { title: 'Cup Cake', link: '/cup/cup-2', image: '/cup/dc7f46bc-0388-4174-bb79-1b92ac186ffa.jpeg', type: 'salvar', price: '5 pcs - Rs 2000.00' },
+    
     
     
     
@@ -101,9 +87,9 @@ const Cakes = () => {
     .filter(Boolean);
 
   // Filter cakes based on selected sub-item or search query
-  const filteredCakes = cakeTypes.filter(cake => {
-    const matchesSubItem = selectedSubItem === 'all' || cake.type.toLowerCase() === selectedSubItem.toLowerCase();
-    const matchesSearch = searchQuery === '' || cake.title.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredClothes = clotheTypes.filter(clothe => {
+    const matchesSubItem = selectedSubItem === 'all' || clothe.type.toLowerCase() === selectedSubItem.toLowerCase();
+    const matchesSearch = searchQuery === '' || clothe.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSubItem && matchesSearch;
   });
 
@@ -174,7 +160,7 @@ const Cakes = () => {
                   >
                     {cat.subItems.map((subItem, subIdx) => (
                       <a key={subIdx} onClick={() => {
-                        if (cat.title.toLowerCase() === 'cakes') {
+                        if (cat.title.toLowerCase() === 'clothes') {
                           setSelectedSubItem(subItem.toLowerCase());
                         } else {
                           handleNavClick(`${cat.link}/${subItem.toLowerCase().replace(/\s/g,'-')}`);
@@ -214,28 +200,28 @@ const Cakes = () => {
             gap: 2,
           }}
         >
-          {filteredCakes.map((cake, index) => (
+          {filteredClothes.map((clothe, index) => (
             <Card
               key={index}
               sx={{
                 cursor: 'pointer',
                 '&:hover': { transform: 'scale(1.05)', transition: '0.3s' },
               }}
-              onClick={() => handleNavClick(cake.link)}
+              onClick={() => handleNavClick(clothe.link)}
             >
               <CardMedia
                 component="img"
                 height="270"
-                image={cake.image}
-                alt={cake.title}
+                image={clothe.image}
+                alt={clothe.title}
                 sx={{ objectFit: 'cover' }}
               />
               <CardContent sx={{ p: 1 }}>
                 <Typography variant="subtitle1" sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1rem' }}>
-                  {cake.title}
+                  {clothe.title}
                 </Typography>
                 <Typography variant="subtitle2" sx={{ textAlign: 'center', color: '#555' }}>
-                  {cake.price}
+                  {clothe.price}
                 </Typography>
               </CardContent>
             </Card>
@@ -258,4 +244,4 @@ const Cakes = () => {
   );
 };
 
-export default Cakes;
+export default Clothes;

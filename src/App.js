@@ -7,6 +7,7 @@ import About from './components/About';
 import Users from './components/Users';
 import Contact from './components/Contact';
 import Cakes from './components/Cakes';
+import Clothes from './components/Clothes';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cakes" element={<Cakes />} />
+        <Route path="/clothes" element={<Clothes />} />
         
       </Routes>
     </Router>
