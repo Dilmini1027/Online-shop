@@ -8,6 +8,11 @@ import Users from './components/Users';
 import Contact from './components/Contact';
 import Cakes from './components/Cakes';
 import Clothes from './components/Clothes';
+import Fruits from './components/Fruits';
+import Flowers from './components/Flowers';
+import Vegetables from './components/Vegetables';
+import Drinks from './components/Drinks';
+
 
 
 function App() {
@@ -22,7 +27,12 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cakes" element={<Cakes />} />
-        <Route path="/clothes" element={<Clothes />} />
+        <Route path="/clothes" element={<Clothes />} /> {/* ✅ Matches Land nav */}
+        <Route path="/fruits" element={<Fruits />} />
+        <Route path="/flowers" element={<Flowers />} />
+        <Route path="/vegetables" element={<Vegetables />} />
+        <Route path="/drinks" element={<Drinks />} />
+        
         
       </Routes>
     </Router>

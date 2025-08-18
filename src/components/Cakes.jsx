@@ -25,13 +25,13 @@ const Cakes = () => {
 
   // Categories with subitems
   const allCategories = [
-    { title: 'Cakes', link: '/cakes', color: '#ffcc80', subItems: ['All', 'Violet', 'Chocolate', 'Butter', 'Strawberry', 'Red Velvet', 'Lemon', 'Black Forest', 'Cheese','Cup','Bento', 'Jar', 'Muffin'] },
-    { title: 'Clothes', link: '/clothes', color: '#90caf9', subItems: ['Frocks', 'Trousers', 'Lehenga', 'Sarees', 'Hot Shorts', 'Blouse', 'Salvar'] },
-    { title: 'Fruits', link: '/fruits', color: '#a5d6a7', subItems: [] },
-    { title: 'Flowers', link: '/flowers', color: '#f48fb1', subItems: [] },
-    { title: 'Vegetables', link: '/vegetables', color: '#81c784', subItems: [] },
-    { title: 'Drinks', link: '/drinks', color: '#bcaaa4', subItems: ['Ice Coffee', 'Mocktail', 'Cool Drink', 'Sun Crush', 'Energy Drinks'] },
-  ];
+     { title: 'Cakes', link: '/cakes', color: '#ffcc80', subItems: ['All', 'Violet', 'Chocolate', 'Butter', 'Strawberry', 'Red Velvet', 'Lemon', 'Black Forest', 'Cheese','Cup','Bento', 'Jar', 'Muffin'] },
+    { title: 'Clothes', link: '/clothes', color: '#90caf9', subItems: ['All', 'Frocks', 'Trousers', 'Lehenga', 'Sarees', 'Hot Shorts', 'Blouse' ] },
+    { title: 'Fruits', link: '/fruits', color: '#a5d6a7', subItems: ['All', 'Citrus', 'Berry', 'Tropical'] },
+    { title: 'Flowers', link: '/flowers', color: '#f48fb1', subItems: ['All', 'Fresh Flowers', 'Artificial'] },
+    { title: 'Vegetables', link: '/vegetables', color: '#81c784', subItems: ['All', 'Leafy', 'Root', 'Fruits', 'Herbs'] },
+    { title: 'Drinks', link: '/drinks', color: '#bcaaa4', subItems: ['All', 'Ice Coffee', 'Mocktail', 'Cool Drink', 'Sun Crush', 'Energy Drinks'] },
+ ];
 
   // Cake variants with separate images and prices
   const cakeTypes = [
@@ -120,6 +120,8 @@ const Cakes = () => {
               {currentPage.replace('-', ' ')}
             </Typography>
           </Breadcrumbs>
+
+          
         </Toolbar>
       </AppBar>
 
