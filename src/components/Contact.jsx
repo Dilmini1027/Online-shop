@@ -12,9 +12,9 @@ const Contact = () => {
   const handleNavClick = (path) => navigate(path);
 
   const contactDetails = [
-    { icon: <EmailIcon sx={{ color: '#fff' }} />, label: 'Email', value: 'support@buzzcart.com', color: '#ff5722' },
-    { icon: <PhoneIcon sx={{ color: '#fff' }} />, label: 'Phone', value: '+94 123 456 789', color: '#00bcd4' },
-    { icon: <LocationOnIcon sx={{ color: '#fff' }} />, label: 'Address', value: '123 BuzzCart Street, Colombo, Sri Lanka', color: '#ffcc00' },
+    { icon: <EmailIcon sx={{ color: '#fff' }} />, label: 'Email', value: 'buzzcartway@gmail.com', color: '#ff5722' },
+    { icon: <PhoneIcon sx={{ color: '#fff' }} />, label: 'Phone', value: '+94 71 234 5678', color: '#00bcd4' },
+    { icon: <LocationOnIcon sx={{ color: '#fff' }} />, label: 'Address', value: 'No. 148, Vauxhall Street, Colombo 2', color: '#ffcc00' },
   ];
 
   return (

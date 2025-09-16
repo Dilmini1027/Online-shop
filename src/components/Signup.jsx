@@ -35,8 +35,26 @@ const Signup = () => {
         <form onSubmit={handleSubmit} style={styles.form}>
           <input name="name" placeholder="Full Name" onChange={handleChange} required style={styles.input} />
           <input type="email" name="email" placeholder="Email" onChange={handleChange} required style={styles.input} />
-          <input type="password" name="password" placeholder="Password" onChange={handleChange} required style={styles.input} />
-          <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} required style={styles.input} />
+          <input name="mobile" placeholder="Mobile Number" onChange={handleChange} required style={styles.input} />
+          <input type="address" name="address" placeholder="Address" onChange={handleChange} required style={styles.input} />
+          
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            required
+            style={{...styles.input, WebkitTextSecurity: 'disc'}}
+          />
+
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            onChange={handleChange}
+            required
+            style={{...styles.input, WebkitTextSecurity: 'disc'}}
+          />
           <button type="submit" style={styles.button}>Sign Up</button>
         </form>
 

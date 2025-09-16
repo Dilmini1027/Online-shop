@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Button, Stack, IconButton, Avatar, Menu, MenuItem, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Profile from '../pages/Profile';
+import Footer from "./Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -61,8 +63,15 @@ const Home = () => {
               <Avatar sx={{ width: 30, height: 30 }}>U</Avatar>
             </IconButton>
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleProfileMenuClose}>
-              <MenuItem onClick={() => { handleProfileMenuClose(); handleNavClick('/profile'); }}>Profile</MenuItem>
-              <MenuItem onClick={() => { handleProfileMenuClose(); handleNavClick('/'); }}>Logout</MenuItem>
+             <MenuItem 
+                  onClick={() => { 
+                    handleProfileMenuClose(); 
+                    handleNavClick('/profile'); 
+                  }}
+                >
+                  Profile
+                </MenuItem>
+             <MenuItem onClick={() => { handleProfileMenuClose(); handleNavClick('/'); }}>Logout</MenuItem>
             </Menu>
           </Stack>
         </Toolbar>
@@ -122,6 +131,7 @@ const Home = () => {
           </Stack>
         </Box>
       </Box>
+      <Footer />
     </>
   );
 };
