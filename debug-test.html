@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <p>Testing navigation links:</p>
+    <ul>
+        <li><a href="http://localhost:3000">Home</a></li>
+        <li><a href="http://localhost:3000/cakes">Cakes Category</a></li>
+        <li><a href="http://localhost:3000/cakes/red-violet-1">Specific Cake Item</a></li>
+        <li><a href="http://localhost:3000/clothes">Clothes Category</a></li>
+        <li><a href="http://localhost:3000/clothes/yellow-floral">Specific Clothes Item</a></li>
+    </ul>
+    
+    <script>
+        console.log("Debug test page loaded");
+        // Test the URLs
+        window.testUrls = [
+            "http://localhost:3000",
+            "http://localhost:3000/cakes", 
+            "http://localhost:3000/cakes/red-violet-1",
+            "http://localhost:3000/clothes",
+        ];
+    </script>
+</body>
+</html>

@@ -283,8 +283,11 @@ const CategoryPage = ({ categoryTitle, categories, items }) => {
               onClick={() => {
                 const itemId = item.link
                   ? item.link.split("/").pop()
-                  : item.id;
-                navigate(`/${categoryTitle.toLowerCase()}/${itemId}`);
+                  : item.id || item.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                const categoryPath = categoryTitle.toLowerCase();
+                const fullPath = `/${categoryPath}/${itemId}`;
+                console.log('Navigating to:', fullPath, 'for item:', item);
+                navigate(fullPath);
               }}
             >
               <CardMedia

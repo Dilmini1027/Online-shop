@@ -40,14 +40,16 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/users" element={<Users />} />
 
-          {/* Category pages */}
-          <Route path="/cakes/*" element={<CakesPage />} />
-          <Route path="/clothes/*" element={<ClothesPage />} />
-          <Route path="/fruits/*" element={<FruitsPage />} />
-          <Route path="/flowers/*" element={<FlowersPage />} />
-          <Route path="/vegetables/*" element={<VegetablesPage />} />
-          <Route path="/drinks/*" element={<DrinksPage />} />
+          {/* Item details pages - MUST come before category pages */}
           <Route path="/:category/:itemId" element={<ItemDetailsPage />} />
+          
+          {/* Category pages */}
+          <Route path="/cakes" element={<CakesPage />} />
+          <Route path="/clothes" element={<ClothesPage />} />
+          <Route path="/fruits" element={<FruitsPage />} />
+          <Route path="/flowers" element={<FlowersPage />} />
+          <Route path="/vegetables" element={<VegetablesPage />} />
+          <Route path="/drinks" element={<DrinksPage />} />
 
 
           

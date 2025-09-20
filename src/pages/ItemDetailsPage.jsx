@@ -9,13 +9,20 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { useParams } from 'react-router-dom';
 
+// Import components
+import NavigationBar from '../components/NavigationBar';
+import { useCart } from '../components/CartContext';
+
 // Simulated data imports - replace with your actual imports
 import { cakeTypes, clothesItems, fruitsItems, flowersItems, vegetablesItems, drinksItems } from '../data/categoryData';
 
 const ItemDetailsPage = () => {
   const { category, itemId } = useParams();
+  const { addItem } = useCart();
 
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({
     size: '',
     flavor: 'Original',
@@ -26,6 +33,7 @@ const ItemDetailsPage = () => {
   const [currentPrice, setCurrentPrice] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [addToCartLoading, setAddToCartLoading] = useState(false);
 
   // Get all items from different categories
   const getAllItems = () => {
@@ -56,29 +64,86 @@ const ItemDetailsPage = () => {
   }
 
   useEffect(() => {
+    console.log('=== ItemDetailsPage useEffect ===');
+    console.log('Category:', category, 'ItemId:', itemId);
+    
     const allItems = getAllItems();
-    const foundProduct = allItems.find(item =>
-      (item.link && item.link.split('/').pop() === itemId) ||
-      (item.id && item.id === itemId)
-    );
-    if (foundProduct) {
-      setProduct({
-        ...foundProduct,
-        rating: 4.8,
-        reviews: Math.floor(Math.random() * 200) + 50,
-        description: getProductDescription(foundProduct),
-        ingredients: getProductIngredients(foundProduct),
-        inStock: true,
-        estimatedDelivery: '2-3 days'
-      });
-      // Use helper for price
-      const basePrice = getNumericPrice(foundProduct.price);
-      setCurrentPrice(basePrice);
-
-      // Set default options
-      const defaultOptions = getDefaultOptions(foundProduct);
-      setSelectedOptions({ ...selectedOptions, ...defaultOptions });
+    console.log('Total items available:', allItems.length);
+    
+    // Enhanced product finding logic with multiple matching strategies
+    let foundProduct = null;
+    
+    // Strategy 1: Direct link match (most common)
+    foundProduct = allItems.find(item => {
+      if (!item.link) return false;
+      const linkEnd = item.link.split('/').pop();
+      return linkEnd === itemId;
+    });
+    
+    // Strategy 2: ID match
+    if (!foundProduct) {
+      foundProduct = allItems.find(item => item.id === itemId);
     }
+    
+    // Strategy 3: Title-based match (kebab-case conversion)
+    if (!foundProduct) {
+      foundProduct = allItems.find(item => {
+        const titleKebab = item.title.toLowerCase()
+          .replace(/\s+/g, '-')
+          .replace(/[^a-z0-9-]/g, '');
+        return titleKebab === itemId || titleKebab.includes(itemId) || itemId.includes(titleKebab);
+      });
+    }
+    
+    // Strategy 4: Partial match in link or type
+    if (!foundProduct) {
+      foundProduct = allItems.find(item => {
+        const linkMatches = item.link && item.link.includes(itemId);
+        const typeMatches = item.type && item.type.toLowerCase().replace(/\s+/g, '-') === itemId;
+        return linkMatches || typeMatches;
+      });
+    }
+    
+    console.log('🔍 Looking for itemId:', itemId);
+    console.log('✅ Found product:', foundProduct ? foundProduct.title : 'NOT FOUND');
+    
+    setLoading(true);
+    setError(null);
+    
+    // Simulate loading delay for better UX
+    setTimeout(() => {
+      if (foundProduct) {
+        setProduct({
+          ...foundProduct,
+          rating: 4.8,
+          reviews: Math.floor(Math.random() * 200) + 50,
+          description: getProductDescription(foundProduct),
+          ingredients: getProductIngredients(foundProduct),
+          inStock: Math.random() > 0.1, // 90% chance in stock
+          estimatedDelivery: '2-3 days'
+        });
+        
+        // Use helper for price
+        const basePrice = getNumericPrice(foundProduct.price);
+        setCurrentPrice(basePrice);
+
+        // Set default options
+        const defaultOptions = getDefaultOptions(foundProduct);
+        setSelectedOptions(prevOptions => ({ 
+          ...prevOptions, 
+          ...defaultOptions,
+          quantity: 1 
+        }));
+        setError(null);
+      } else {
+        console.warn('Product not found for itemId:', itemId);
+        setProduct(null);
+        setError(`Product with ID "${itemId}" not found. Please check the URL or go back to browse products.`);
+      }
+      setLoading(false);
+    }, 300);
+    
+    return () => setLoading(false); // Cleanup on unmount
   }, [itemId]);
 
   const getProductDescription = (product) => {
@@ -213,23 +278,95 @@ const ItemDetailsPage = () => {
     }
   };
 
-  const handleAddToCart = () => {
-    console.log('Added to cart:', { product, selectedOptions, currentPrice });
-    // Add your cart logic here
+  const handleAddToCart = async () => {
+    if (!product || !product.inStock) {
+      alert('Sorry, this product is currently out of stock.');
+      return;
+    }
+
+    setAddToCartLoading(true);
+    
+    try {
+      // Prepare the cart item
+      const cartItem = {
+        id: product.link ? product.link.split('/').pop() : itemId,
+        title: product.title,
+        image: product.image,
+        price: currentPrice,
+        originalPrice: getNumericPrice(product.price),
+        options: {
+          size: selectedOptions.size,
+          flavor: selectedOptions.flavor,
+          color: selectedOptions.color,
+          shape: selectedOptions.shape,
+        },
+        quantity: selectedOptions.quantity,
+        category: category
+      };
+
+      // Remove empty options
+      Object.keys(cartItem.options).forEach(key => {
+        if (!cartItem.options[key]) {
+          delete cartItem.options[key];
+        }
+      });
+
+      console.log('Adding to cart:', cartItem);
+
+      // Add to cart using the addItem function
+      addItem(cartItem);
+
+      // Show success feedback
+      alert(`✅ ${product.title} has been added to your cart!`);
+      
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert('Sorry, there was an error adding the item to your cart. Please try again.');
+    } finally {
+      setAddToCartLoading(false);
+    }
   };
 
-  if (!product) {
+  // Loading state
+  if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Product not found</h2>
-          <button 
-            onClick={() => window.history.back()}
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            <ArrowBackIcon sx={{ fontSize: 20, mr: 1 }} />
-            Go Back
-          </button>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Loading product details...</h2>
+          <p className="text-gray-600">Please wait while we fetch the information</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !product) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="text-6xl mb-4">😔</div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            {error ? 'Product Not Found' : 'Something went wrong'}
+          </h2>
+          <p className="text-gray-600 mb-6">
+            {error || 'We couldn\'t load the product details. Please try again.'}
+          </p>
+          <div className="space-y-3">
+            <button 
+              onClick={() => window.history.back()}
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full justify-center"
+            >
+              <ArrowBackIcon sx={{ fontSize: 20, mr: 1 }} />
+              Go Back
+            </button>
+            <button 
+              onClick={() => window.location.href = '/'}
+              className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors w-full justify-center"
+            >
+              🏠 Back to Home
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -240,12 +377,16 @@ const ItemDetailsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <NavigationBar />
+      
+
+      
+      <div className="max-w-7xl mx-auto px-4 py-6 mt-16">
         {/* Breadcrumbs */}
         <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-4">
-          <a href="/" className="hover:text-gray-700">Home</a>
+          <button onClick={() => window.location.href = '/'} className="hover:text-gray-700 bg-transparent border-none cursor-pointer">Home</button>
           <span>/</span>
-          <a href={`/${product.type}`} className="hover:text-gray-700 capitalize">{product.type}</a>
+          <button onClick={() => window.location.href = `/${category}`} className="hover:text-gray-700 capitalize bg-transparent border-none cursor-pointer">{category}</button>
           <span>/</span>
           <span className="text-gray-900">{product.title}</span>
         </nav>
@@ -262,22 +403,41 @@ const ItemDetailsPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Images */}
           <div className="space-y-4">
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden relative group">
               <img
                 src={product.image}
                 alt={product.title}
-                className="w-full h-96 object-cover"
+                className="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-105"
+                onError={(e) => {
+                  e.target.src = '/logo.png'; // Fallback image
+                }}
               />
+              {/* Image overlay for better interaction */}
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+              
+              {/* Product badge */}
+              {product.inStock ? (
+                <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  In Stock
+                </div>
+              ) : (
+                <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  Out of Stock
+                </div>
+              )}
             </div>
             
             {/* Thumbnail Gallery */}
             <div className="flex space-x-2">
               {[1, 2, 3, 4].map((thumb) => (
-                <div key={thumb} className="w-16 h-16 bg-white rounded-lg shadow cursor-pointer overflow-hidden">
+                <div key={thumb} className="w-16 h-16 bg-white rounded-lg shadow cursor-pointer overflow-hidden hover:shadow-md transition-shadow">
                   <img
                     src={product.image}
                     alt={`${product.title} ${thumb}`}
-                    className="w-full h-full object-cover opacity-70 hover:opacity-100"
+                    className="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity"
+                    onError={(e) => {
+                      e.target.src = '/logo.png'; // Fallback image
+                    }}
                   />
                 </div>
               ))}
@@ -370,11 +530,20 @@ const ItemDetailsPage = () => {
             <div className="space-y-4">
               <button
                 onClick={handleAddToCart}
-                disabled={!product.inStock}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-medium py-4 px-6 rounded-xl transition-colors flex items-center justify-center space-x-2"
+                disabled={!product.inStock || addToCartLoading}
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-4 px-6 rounded-xl transition-colors flex items-center justify-center space-x-2"
               >
-                <ShoppingCartIcon sx={{ fontSize: 20, mr: 1 }} />
-                <span>Add to Cart</span>
+                {addToCartLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <span>Adding...</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCartIcon sx={{ fontSize: 20, mr: 1 }} />
+                    <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
+                  </>
+                )}
               </button>
               
               <div className="grid grid-cols-2 gap-3">
